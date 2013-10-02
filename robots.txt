@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: 
+Disallow: /
 
 Sitemap: http://playdegex.github.io/sitemap.xml 
