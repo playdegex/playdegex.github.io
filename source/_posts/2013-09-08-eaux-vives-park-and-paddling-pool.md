@@ -11,8 +11,8 @@ mapping:
 ---
 
 
-{% left img {{site.url}}/photos/20130802_144450.jpg 800 600}
-{% left img {{site.url}}/photos/20130802_150821.jpg 800 600}
+{% img left /photos/20130802_144450.jpg %}
+{% img left /photos/20130802_150821.jpg %}
 
 The [Eaux-Vives][eaux] park borders Lake Geneva close to the Jet d'Eau. 
 The park itself is beautifully kept with very impressive flower beds. On 
