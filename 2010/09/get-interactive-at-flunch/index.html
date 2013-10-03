@@ -108,6 +108,7 @@
 <div class="entry-content"><table cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://1.bp.blogspot.com/_dcMJSjEmd8k/TIu5cJTuCaI/AAAAAAAAAFg/KIWBjgmEGmg/s1600/IMAG1018.jpg" imageanchor="1" style="clear: right; margin-bottom: 1em; margin-left: auto; margin-right: auto;"><img border="0" height="261" src="http://1.bp.blogspot.com/_dcMJSjEmd8k/TIu5cJTuCaI/AAAAAAAAAFg/KIWBjgmEGmg/s400/IMAG1018.jpg" width="400" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Flunch Interactive</td></tr></tbody></table><br /><table cellpadding="0" cellspacing="0" class="tr-caption-container" style="float: right; text-align: right;"><tbody><tr><td style="text-align: center;"><a href="http://2.bp.blogspot.com/_dcMJSjEmd8k/TIu5WbZ4VLI/AAAAAAAAAFc/dPN4m30DyoQ/s1600/IMAG1022.jpg" imageanchor="1" style="clear: left; margin-bottom: 1em; margin-left: auto; margin-right: auto;"><img border="0" height="200" src="http://2.bp.blogspot.com/_dcMJSjEmd8k/TIu5WbZ4VLI/AAAAAAAAAFc/dPN4m30DyoQ/s200/IMAG1022.jpg" width="146" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Play table &nbsp;coming away from the wall.</td></tr></tbody></table>Flunch is the recently rebranded cafeteria at <a href="http://carrefour%20in%20segny/">Carrefour in Segny</a>. It has a toddler&#8217;s area which is basically a pretty small copy of an Ikea cafeteria play area with interactive panels and those beads on wire things. It also has a tiny telly so far away you can&#8217;t see it. &nbsp;I noticed also that one of shelves was coming away from the wall which, given this is a new place, seems bad. The ball pit that used to be here in Cafe Cresendo&nbsp;has now long gone.</div>
 
 
+
   <footer>
     <p class="meta">
       
@@ -248,6 +249,98 @@
   </script>
 
 
+
+
+    
+            <script type="text/javascript">
+var jekyllMapping = (function () {
+    'use strict';
+    var settings;
+    var obj = {
+        plotArray: function(locations) {
+            function jekyllMapListen (m, s) {
+                if (s.link) {
+                    google.maps.event.addListener(m, 'click', function() {
+                        window.location.href = s.link;
+                    });
+                }
+            }
+            var bounds = new google.maps.LatLngBounds(), markers = [], s, l, m;
+            while (locations.length > 0) {
+                s = locations.pop();
+                l = new google.maps.LatLng(s.latitude, s.longitude);
+                m = new google.maps.Marker({
+                    position: l,
+                    map: this.map,
+                    title: s.title
+                });
+                markers.push(m);
+                bounds.extend(l);                
+                jekyllMapListen(m, s);
+            }
+            this.map.fitBounds(bounds);
+        },
+        indexMap: function () {
+            this.plotArray(settings.pages);
+        },
+        pageToMap: function () {
+            if (typeof(settings.latitude) !== 'undefined' && typeof(settings.longitude) !== 'undefined') {
+                this.options.center = new google.maps.LatLng(settings.latitude, settings.longitude);
+
+                var mainMarker = new google.maps.Marker({
+                    position: this.options.center,
+                    map: this.map,
+                    title: "Get Interactive at Flunch"
+                });
+                this.map.setCenter(this.options.center);
+            }     
+
+            if (settings.locations instanceof Array) {
+                this.plotArray(settings.locations);
+            }
+
+            if (settings.kml) {
+                var mainLayer = new google.maps.KmlLayer(settings.kml);
+                mainLayer.setMap(this.map);
+            }
+            
+            if (settings.layers) {
+                var layers = [];
+                while (settings.layers.length > 0){
+                    var m = new google.maps.KmlLayer(settings.layers.pop());
+                    layers.push(m);
+                    m.setMap(this.map);
+                }
+            }
+        },
+        mappingInitialize: function () {
+            this.options = {
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: new google.maps.LatLng(0, 0)
+            };
+
+            this.map = new google.maps.Map(document.getElementById("jekyll-mapping"), this.options);
+
+            if (settings.pages) {
+                this.indexMap();
+            } else {
+                this.pageToMap();
+            }
+        },
+        loadScript: function (set) {
+            settings = set;
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "http://maps.googleapis.com/maps/api/js?key=" + settings.api_key + "&sensor=false&callback=jekyllMapping.mappingInitialize";
+            document.body.appendChild(script);
+        }
+    };
+    return obj;
+}());
+</script> 
+        
+    
 
 
 

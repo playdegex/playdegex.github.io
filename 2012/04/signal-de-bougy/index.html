@@ -108,6 +108,7 @@
 <div class="entry-content"><div class="separator" style="clear: both; text-align: center;"><a href="http://2.bp.blogspot.com/-QPqcIo2l0Do/T50otfbBy_I/AAAAAAAA0vY/4FO7GGE-YhE/s1600/dscn4446.jpg" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" height="240" src="http://2.bp.blogspot.com/-QPqcIo2l0Do/T50otfbBy_I/AAAAAAAA0vY/4FO7GGE-YhE/s320/dscn4446.jpg" width="320" /></a><a href="http://4.bp.blogspot.com/-3Ebx2kpB5U8/T50pAoApoPI/AAAAAAAA0vg/Ytk2HgBlN1c/s1600/dscn4453.jpg" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" height="240" src="http://4.bp.blogspot.com/-3Ebx2kpB5U8/T50pAoApoPI/AAAAAAAA0vg/Ytk2HgBlN1c/s320/dscn4453.jpg" width="320" /></a><a href="http://1.bp.blogspot.com/-vxJnO-6W99E/T50pPdrB_NI/AAAAAAAA0vs/sIr9eabwbwE/s1600/dscn4450.jpg" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" height="240" src="http://1.bp.blogspot.com/-vxJnO-6W99E/T50pPdrB_NI/AAAAAAAA0vs/sIr9eabwbwE/s320/dscn4450.jpg" width="320" /></a></div><br /><a href="http://www.signaldebougy.ch/">Signal de Bougy</a> is easily one of the <a href="http://playdegex.blogspot.com/search/label/Best">best</a>&nbsp;collection of playgrounds in this region. Everyone should visit here at least once per year!<br />There&#8217;s a water play area, numerous climbing frames including a rocket and a large rope polygon.<br />The park also boasts collections of pigs, cows, chickens, &#8230; to stroll around.<br />There are lots of picnic tables, a BBQ area and&nbsp;a Migros&nbsp;cafeteria,&nbsp;which includes an indoor play area. Signal de Bougy is &nbsp;free to enter and enjoy.<br />For older children there are tree walk ways within <a href="http://parc-aventure.ch/parcs/signal/">parc adventure</a>.<br /></div>
 
 
+
   <footer>
     <p class="meta">
       
@@ -248,6 +249,98 @@
   </script>
 
 
+
+
+    
+            <script type="text/javascript">
+var jekyllMapping = (function () {
+    'use strict';
+    var settings;
+    var obj = {
+        plotArray: function(locations) {
+            function jekyllMapListen (m, s) {
+                if (s.link) {
+                    google.maps.event.addListener(m, 'click', function() {
+                        window.location.href = s.link;
+                    });
+                }
+            }
+            var bounds = new google.maps.LatLngBounds(), markers = [], s, l, m;
+            while (locations.length > 0) {
+                s = locations.pop();
+                l = new google.maps.LatLng(s.latitude, s.longitude);
+                m = new google.maps.Marker({
+                    position: l,
+                    map: this.map,
+                    title: s.title
+                });
+                markers.push(m);
+                bounds.extend(l);                
+                jekyllMapListen(m, s);
+            }
+            this.map.fitBounds(bounds);
+        },
+        indexMap: function () {
+            this.plotArray(settings.pages);
+        },
+        pageToMap: function () {
+            if (typeof(settings.latitude) !== 'undefined' && typeof(settings.longitude) !== 'undefined') {
+                this.options.center = new google.maps.LatLng(settings.latitude, settings.longitude);
+
+                var mainMarker = new google.maps.Marker({
+                    position: this.options.center,
+                    map: this.map,
+                    title: "Signal de Bougy"
+                });
+                this.map.setCenter(this.options.center);
+            }     
+
+            if (settings.locations instanceof Array) {
+                this.plotArray(settings.locations);
+            }
+
+            if (settings.kml) {
+                var mainLayer = new google.maps.KmlLayer(settings.kml);
+                mainLayer.setMap(this.map);
+            }
+            
+            if (settings.layers) {
+                var layers = [];
+                while (settings.layers.length > 0){
+                    var m = new google.maps.KmlLayer(settings.layers.pop());
+                    layers.push(m);
+                    m.setMap(this.map);
+                }
+            }
+        },
+        mappingInitialize: function () {
+            this.options = {
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: new google.maps.LatLng(0, 0)
+            };
+
+            this.map = new google.maps.Map(document.getElementById("jekyll-mapping"), this.options);
+
+            if (settings.pages) {
+                this.indexMap();
+            } else {
+                this.pageToMap();
+            }
+        },
+        loadScript: function (set) {
+            settings = set;
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "http://maps.googleapis.com/maps/api/js?key=" + settings.api_key + "&sensor=false&callback=jekyllMapping.mappingInitialize";
+            document.body.appendChild(script);
+        }
+    };
+    return obj;
+}());
+</script> 
+        
+    
 
 
 

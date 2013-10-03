@@ -108,6 +108,7 @@
 <div class="entry-content"><div class="separator" style="clear: both; text-align: center;"><a href="http://2.bp.blogspot.com/_o22J03lZ9Gw/TNmvWayYC8I/AAAAAAAAzd8/5iPa5J2bo_8/s1600/DSCN2891+%2528Modified%2529.JPG" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="180" src="http://2.bp.blogspot.com/_o22J03lZ9Gw/TNmvWayYC8I/AAAAAAAAzd8/5iPa5J2bo_8/s320/DSCN2891+%2528Modified%2529.JPG" width="320" /></a></div><a href="http://3.bp.blogspot.com/_o22J03lZ9Gw/TNmwJPbzDBI/AAAAAAAAzeA/s7xfPOuRsJw/s1600/DSCN2883+%2528Modified%2529.JPG" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="320" src="http://3.bp.blogspot.com/_o22J03lZ9Gw/TNmwJPbzDBI/AAAAAAAAzeA/s7xfPOuRsJw/s320/DSCN2883+%2528Modified%2529.JPG" width="296" /></a><br /><a href="http://2.bp.blogspot.com/_o22J03lZ9Gw/TNmwZmKV0lI/AAAAAAAAzeE/ipXf0NbITHU/s1600/DSCN2887+%2528Modified%2529.JPG" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="200" src="http://2.bp.blogspot.com/_o22J03lZ9Gw/TNmwZmKV0lI/AAAAAAAAzeE/ipXf0NbITHU/s320/DSCN2887+%2528Modified%2529.JPG" width="320" /></a><br />This park is uniquely located right up against Geneva Airport&#8217;s runway. From the climbing frame you can view private jets and huge boeings roar in right next to you. The park is a nature reserve and there are often plane spotters sitting on the many benches overlooking the runway.<br />I particularly like the merry-go-round and its ability to make you feel quite sick while you attempt to demonstrate&nbsp;<a href="http://en.wikipedia.org/wiki/Angular_momentum">conservation of angular momentum</a>.<br />To find these swings park by Lidl supermarket and head through the gate in the fence past the large ponds.</div>
 
 
+
   <footer>
     <p class="meta">
       
@@ -248,6 +249,98 @@
   </script>
 
 
+
+
+    
+            <script type="text/javascript">
+var jekyllMapping = (function () {
+    'use strict';
+    var settings;
+    var obj = {
+        plotArray: function(locations) {
+            function jekyllMapListen (m, s) {
+                if (s.link) {
+                    google.maps.event.addListener(m, 'click', function() {
+                        window.location.href = s.link;
+                    });
+                }
+            }
+            var bounds = new google.maps.LatLngBounds(), markers = [], s, l, m;
+            while (locations.length > 0) {
+                s = locations.pop();
+                l = new google.maps.LatLng(s.latitude, s.longitude);
+                m = new google.maps.Marker({
+                    position: l,
+                    map: this.map,
+                    title: s.title
+                });
+                markers.push(m);
+                bounds.extend(l);                
+                jekyllMapListen(m, s);
+            }
+            this.map.fitBounds(bounds);
+        },
+        indexMap: function () {
+            this.plotArray(settings.pages);
+        },
+        pageToMap: function () {
+            if (typeof(settings.latitude) !== 'undefined' && typeof(settings.longitude) !== 'undefined') {
+                this.options.center = new google.maps.LatLng(settings.latitude, settings.longitude);
+
+                var mainMarker = new google.maps.Marker({
+                    position: this.options.center,
+                    map: this.map,
+                    title: "Secret Aeroplane Park in Ferney"
+                });
+                this.map.setCenter(this.options.center);
+            }     
+
+            if (settings.locations instanceof Array) {
+                this.plotArray(settings.locations);
+            }
+
+            if (settings.kml) {
+                var mainLayer = new google.maps.KmlLayer(settings.kml);
+                mainLayer.setMap(this.map);
+            }
+            
+            if (settings.layers) {
+                var layers = [];
+                while (settings.layers.length > 0){
+                    var m = new google.maps.KmlLayer(settings.layers.pop());
+                    layers.push(m);
+                    m.setMap(this.map);
+                }
+            }
+        },
+        mappingInitialize: function () {
+            this.options = {
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: new google.maps.LatLng(0, 0)
+            };
+
+            this.map = new google.maps.Map(document.getElementById("jekyll-mapping"), this.options);
+
+            if (settings.pages) {
+                this.indexMap();
+            } else {
+                this.pageToMap();
+            }
+        },
+        loadScript: function (set) {
+            settings = set;
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "http://maps.googleapis.com/maps/api/js?key=" + settings.api_key + "&sensor=false&callback=jekyllMapping.mappingInitialize";
+            document.body.appendChild(script);
+        }
+    };
+    return obj;
+}());
+</script> 
+        
+    
 
 
 

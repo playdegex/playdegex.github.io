@@ -108,6 +108,7 @@
 <div class="entry-content"><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://1.bp.blogspot.com/_dcMJSjEmd8k/TIu8m87yUHI/AAAAAAAAAFk/SCOSUj7G8uY/s1600/IMAG1032.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="216" src="http://1.bp.blogspot.com/_dcMJSjEmd8k/TIu8m87yUHI/AAAAAAAAAFk/SCOSUj7G8uY/s400/IMAG1032.jpg" width="400" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Concrete table football, just bring your own ball.</td></tr></tbody></table><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/_dcMJSjEmd8k/TIu8tJjN9PI/AAAAAAAAAFo/RUbtYsOYAYc/s1600/IMAG1030.jpg" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="191" src="http://1.bp.blogspot.com/_dcMJSjEmd8k/TIu8tJjN9PI/AAAAAAAAAFo/RUbtYsOYAYc/s320/IMAG1030.jpg" width="320" /></a></div>On &nbsp;the outskirts of&nbsp;Prévessin-Moëns by the football pitch there are various sports facilities including some swings. The climbing frame is good. The round-a-bout looks good but pushing it far too hard and it squeaks, it just needs a good oiling.<br /><br />There&#8217;s also concrete table tennis and table football there to use, just bring a bat and ball.<br /><br />And of course there is skateboard park with half pipe, a basketball court and what I thought was a massive sandpit but was, of course, a vollyball court.<br /><br />Genrally this place feels a bit on the edge of nowhere and most people probably drive here but it&#8217;s a nice enough place if you are passing.<br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/_dcMJSjEmd8k/TIu8wryVvWI/AAAAAAAAAFs/G0hbf_pYDuM/s1600/IMAG1026.jpg" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" height="188" src="http://1.bp.blogspot.com/_dcMJSjEmd8k/TIu8wryVvWI/AAAAAAAAAFs/G0hbf_pYDuM/s320/IMAG1026.jpg" width="320" /></a></div><div><br /></div></div>
 
 
+
   <footer>
     <p class="meta">
       
@@ -248,6 +249,98 @@
   </script>
 
 
+
+
+    
+            <script type="text/javascript">
+var jekyllMapping = (function () {
+    'use strict';
+    var settings;
+    var obj = {
+        plotArray: function(locations) {
+            function jekyllMapListen (m, s) {
+                if (s.link) {
+                    google.maps.event.addListener(m, 'click', function() {
+                        window.location.href = s.link;
+                    });
+                }
+            }
+            var bounds = new google.maps.LatLngBounds(), markers = [], s, l, m;
+            while (locations.length > 0) {
+                s = locations.pop();
+                l = new google.maps.LatLng(s.latitude, s.longitude);
+                m = new google.maps.Marker({
+                    position: l,
+                    map: this.map,
+                    title: s.title
+                });
+                markers.push(m);
+                bounds.extend(l);                
+                jekyllMapListen(m, s);
+            }
+            this.map.fitBounds(bounds);
+        },
+        indexMap: function () {
+            this.plotArray(settings.pages);
+        },
+        pageToMap: function () {
+            if (typeof(settings.latitude) !== 'undefined' && typeof(settings.longitude) !== 'undefined') {
+                this.options.center = new google.maps.LatLng(settings.latitude, settings.longitude);
+
+                var mainMarker = new google.maps.Marker({
+                    position: this.options.center,
+                    map: this.map,
+                    title: "Table Football and Skateboard Park at Moëns"
+                });
+                this.map.setCenter(this.options.center);
+            }     
+
+            if (settings.locations instanceof Array) {
+                this.plotArray(settings.locations);
+            }
+
+            if (settings.kml) {
+                var mainLayer = new google.maps.KmlLayer(settings.kml);
+                mainLayer.setMap(this.map);
+            }
+            
+            if (settings.layers) {
+                var layers = [];
+                while (settings.layers.length > 0){
+                    var m = new google.maps.KmlLayer(settings.layers.pop());
+                    layers.push(m);
+                    m.setMap(this.map);
+                }
+            }
+        },
+        mappingInitialize: function () {
+            this.options = {
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: new google.maps.LatLng(0, 0)
+            };
+
+            this.map = new google.maps.Map(document.getElementById("jekyll-mapping"), this.options);
+
+            if (settings.pages) {
+                this.indexMap();
+            } else {
+                this.pageToMap();
+            }
+        },
+        loadScript: function (set) {
+            settings = set;
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "http://maps.googleapis.com/maps/api/js?key=" + settings.api_key + "&sensor=false&callback=jekyllMapping.mappingInitialize";
+            document.body.appendChild(script);
+        }
+    };
+    return obj;
+}());
+</script> 
+        
+    
 
 
 

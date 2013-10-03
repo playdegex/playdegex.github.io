@@ -108,6 +108,7 @@
 <div class="entry-content"><div class="separator" style="clear: both; text-align: center;"><span id="goog_877539795"></span><span id="goog_877539796"></span></div><div class="separator" style="clear: both; text-align: center;"><a href="http://3.bp.blogspot.com/-VAp_lyIr_1E/UGDBRxba94I/AAAAAAAA2Zg/5CU-lIdCcxw/s1600/20120901_163002.jpg" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" height="222" src="http://3.bp.blogspot.com/-VAp_lyIr_1E/UGDBRxba94I/AAAAAAAA2Zg/5CU-lIdCcxw/s320/20120901_163002.jpg" width="320" /></a></div><a href="http://2.bp.blogspot.com/-6ZFET88sQoE/UGDBU6OVxDI/AAAAAAAA2Zo/YdxUozowzzU/s1600/20120901_163624.jpg" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" height="172" src="http://2.bp.blogspot.com/-6ZFET88sQoE/UGDBU6OVxDI/AAAAAAAA2Zo/YdxUozowzzU/s320/20120901_163624.jpg" width="320" /></a><br /><a href="http://1.bp.blogspot.com/-j4DURm6ZnXA/UGDBYOPJimI/AAAAAAAA2Zw/UMdmLyoXpoc/s1600/20120901_164017.jpg" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" height="195" src="http://1.bp.blogspot.com/-j4DURm6ZnXA/UGDBYOPJimI/AAAAAAAA2Zw/UMdmLyoXpoc/s320/20120901_164017.jpg" width="320" /></a><br />Geneva&#8217;s newest creation is on Plainpalais, it has to be one of the most abstract climbing frames in the area being made of logs and fence panels&#8230; It&#8217;s a really good area to play in and some of the obstacles are indeed quite challenging.<br /><br />In addition there is a sand pit&nbsp;surrounded&nbsp;by concrete dunes. The dunes have push button water for testing your canal construction.<br /><br />The adjoining skate park is also pretty special.<br /><br />And while there you can even grab a <a href="http://www.geneveroule.ch/en/index.php?option=com_content&amp;view=article&amp;id=49&amp;Itemid=57">free bike</a>&nbsp;to get around town.<br /><br />In summer months bring your sun cream and sun hats - there is very little shade!</div>
 
 
+
   <footer>
     <p class="meta">
       
@@ -248,6 +249,98 @@
   </script>
 
 
+
+
+    
+            <script type="text/javascript">
+var jekyllMapping = (function () {
+    'use strict';
+    var settings;
+    var obj = {
+        plotArray: function(locations) {
+            function jekyllMapListen (m, s) {
+                if (s.link) {
+                    google.maps.event.addListener(m, 'click', function() {
+                        window.location.href = s.link;
+                    });
+                }
+            }
+            var bounds = new google.maps.LatLngBounds(), markers = [], s, l, m;
+            while (locations.length > 0) {
+                s = locations.pop();
+                l = new google.maps.LatLng(s.latitude, s.longitude);
+                m = new google.maps.Marker({
+                    position: l,
+                    map: this.map,
+                    title: s.title
+                });
+                markers.push(m);
+                bounds.extend(l);                
+                jekyllMapListen(m, s);
+            }
+            this.map.fitBounds(bounds);
+        },
+        indexMap: function () {
+            this.plotArray(settings.pages);
+        },
+        pageToMap: function () {
+            if (typeof(settings.latitude) !== 'undefined' && typeof(settings.longitude) !== 'undefined') {
+                this.options.center = new google.maps.LatLng(settings.latitude, settings.longitude);
+
+                var mainMarker = new google.maps.Marker({
+                    position: this.options.center,
+                    map: this.map,
+                    title: "Artistic Fences at Plainpalais"
+                });
+                this.map.setCenter(this.options.center);
+            }     
+
+            if (settings.locations instanceof Array) {
+                this.plotArray(settings.locations);
+            }
+
+            if (settings.kml) {
+                var mainLayer = new google.maps.KmlLayer(settings.kml);
+                mainLayer.setMap(this.map);
+            }
+            
+            if (settings.layers) {
+                var layers = [];
+                while (settings.layers.length > 0){
+                    var m = new google.maps.KmlLayer(settings.layers.pop());
+                    layers.push(m);
+                    m.setMap(this.map);
+                }
+            }
+        },
+        mappingInitialize: function () {
+            this.options = {
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: new google.maps.LatLng(0, 0)
+            };
+
+            this.map = new google.maps.Map(document.getElementById("jekyll-mapping"), this.options);
+
+            if (settings.pages) {
+                this.indexMap();
+            } else {
+                this.pageToMap();
+            }
+        },
+        loadScript: function (set) {
+            settings = set;
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "http://maps.googleapis.com/maps/api/js?key=" + settings.api_key + "&sensor=false&callback=jekyllMapping.mappingInitialize";
+            document.body.appendChild(script);
+        }
+    };
+    return obj;
+}());
+</script> 
+        
+    
 
 
 

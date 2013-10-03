@@ -107,6 +107,7 @@
 
 <div class="entry-content"><div dir="ltr" style="text-align: left;" trbidi="on"><a href="http://3.bp.blogspot.com/-ijqYyjHEkUk/Uix9YYiI9gI/AAAAAAAA4x4/ntIIzeo4uPo/s1600/20130802_144450.jpg" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="240" src="http://3.bp.blogspot.com/-ijqYyjHEkUk/Uix9YYiI9gI/AAAAAAAA4x4/ntIIzeo4uPo/s320/20130802_144450.jpg" width="320" /></a><a href="http://4.bp.blogspot.com/-BZd64jbTPzk/Uix9jun33EI/AAAAAAAA4yA/xR4cNytOELw/s1600/20130802_150821.jpg" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="240" src="http://4.bp.blogspot.com/-BZd64jbTPzk/Uix9jun33EI/AAAAAAAA4yA/xR4cNytOELw/s320/20130802_150821.jpg" width="320" /></a><br />The <a href="http://www.ville-geneve.ch/plan-ville/parcs-jardins-plages-bains-publics/parc-eaux-vives/">Eaux-Vives</a> park borders Lake Geneva close to the Jet d&#8217;Eau. The park itself is beautifully kept with very impressive flower beds. On a hot day the park has a well shaded paddling pool which is not photographed here.<br />To find the playground walk uphill to the top of the park. The cafe in the park has ice-creams and a reasonable menu-du-jour. As well as the main wooden climbing frame there are some easy swings for toddlers. The day we were there free deck chairs were are also available.</div>
 </div>
+<div id="jekyll-mapping" style="height:400px;width:600px;"></div>
 
 
   <footer>
@@ -247,6 +248,104 @@
   </script>
 
 
+
+
+    
+            <script type="text/javascript">
+var jekyllMapping = (function () {
+    'use strict';
+    var settings;
+    var obj = {
+        plotArray: function(locations) {
+            function jekyllMapListen (m, s) {
+                if (s.link) {
+                    google.maps.event.addListener(m, 'click', function() {
+                        window.location.href = s.link;
+                    });
+                }
+            }
+            var bounds = new google.maps.LatLngBounds(), markers = [], s, l, m;
+            while (locations.length > 0) {
+                s = locations.pop();
+                l = new google.maps.LatLng(s.latitude, s.longitude);
+                m = new google.maps.Marker({
+                    position: l,
+                    map: this.map,
+                    title: s.title
+                });
+                markers.push(m);
+                bounds.extend(l);                
+                jekyllMapListen(m, s);
+            }
+            this.map.fitBounds(bounds);
+        },
+        indexMap: function () {
+            this.plotArray(settings.pages);
+        },
+        pageToMap: function () {
+            if (typeof(settings.latitude) !== 'undefined' && typeof(settings.longitude) !== 'undefined') {
+                this.options.center = new google.maps.LatLng(settings.latitude, settings.longitude);
+
+                var mainMarker = new google.maps.Marker({
+                    position: this.options.center,
+                    map: this.map,
+                    title: "Eaux Vives Park and Paddling Pool"
+                });
+                this.map.setCenter(this.options.center);
+            }     
+
+            if (settings.locations instanceof Array) {
+                this.plotArray(settings.locations);
+            }
+
+            if (settings.kml) {
+                var mainLayer = new google.maps.KmlLayer(settings.kml);
+                mainLayer.setMap(this.map);
+            }
+            
+            if (settings.layers) {
+                var layers = [];
+                while (settings.layers.length > 0){
+                    var m = new google.maps.KmlLayer(settings.layers.pop());
+                    layers.push(m);
+                    m.setMap(this.map);
+                }
+            }
+        },
+        mappingInitialize: function () {
+            this.options = {
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: new google.maps.LatLng(0, 0)
+            };
+
+            this.map = new google.maps.Map(document.getElementById("jekyll-mapping"), this.options);
+
+            if (settings.pages) {
+                this.indexMap();
+            } else {
+                this.pageToMap();
+            }
+        },
+        loadScript: function (set) {
+            settings = set;
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "http://maps.googleapis.com/maps/api/js?key=" + settings.api_key + "&sensor=false&callback=jekyllMapping.mappingInitialize";
+            document.body.appendChild(script);
+        }
+    };
+    return obj;
+}());
+</script> 
+        
+    
+    
+            <script type="text/javascript">
+                window.onload = function () { jekyllMapping.loadScript({"provider":"google_js","api_key":"AIzaSyAdd6WGIih1y7ph8yXHU4RkacGRVSppkNY","zoom":10,"dimensions":{"width":600,"height":400},"latitude":46.2004952,"longitude":6.165453599999978}) };
+            </script>
+        
+    
 
 
 

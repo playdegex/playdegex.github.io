@@ -108,6 +108,7 @@
 <div class="entry-content"><div class="separator" style="clear: both; text-align: left;"><a href="http://4.bp.blogspot.com/--e2z0vHOVkM/Tgebz97rquI/AAAAAAAAzoI/3PzT1jt855s/s1600/DSCN3491.JPG" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="240" src="http://4.bp.blogspot.com/--e2z0vHOVkM/Tgebz97rquI/AAAAAAAAzoI/3PzT1jt855s/s320/DSCN3491.JPG" width="320" /></a></div><a href="http://2.bp.blogspot.com/-dB2ZEEjofgk/Tgec3HboD_I/AAAAAAAAzoU/UdnRHeRFin4/s1600/DSCN3495.JPG" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="240" src="http://2.bp.blogspot.com/-dB2ZEEjofgk/Tgec3HboD_I/AAAAAAAAzoU/UdnRHeRFin4/s320/DSCN3495.JPG" width="320" /></a>Hermance is the last piece of Switzerland on Lake Geneva before you enter France. Hermance is a very pretty village that boasts one of the best kept lake side beaches there is. It&#8217;s a great place for swimming and the playground and sandpit are also extremely well located. The views of Lake Geneva are among the best. There is also a buvette selling wine, beer, <em>saucisse</em> and ice cream. To get to Hermance there is a ferry from Nyon or it is the last stop on Bus E 25 minutes from the center of Geneva. The plage costs 4CHF per adult to enter. Hermance plage is incredibly well kept.<br /><br />The village itself has a few shops, restaurants and a large stone tower.</div>
 
 
+
   <footer>
     <p class="meta">
       
@@ -248,6 +249,98 @@
   </script>
 
 
+
+
+    
+            <script type="text/javascript">
+var jekyllMapping = (function () {
+    'use strict';
+    var settings;
+    var obj = {
+        plotArray: function(locations) {
+            function jekyllMapListen (m, s) {
+                if (s.link) {
+                    google.maps.event.addListener(m, 'click', function() {
+                        window.location.href = s.link;
+                    });
+                }
+            }
+            var bounds = new google.maps.LatLngBounds(), markers = [], s, l, m;
+            while (locations.length > 0) {
+                s = locations.pop();
+                l = new google.maps.LatLng(s.latitude, s.longitude);
+                m = new google.maps.Marker({
+                    position: l,
+                    map: this.map,
+                    title: s.title
+                });
+                markers.push(m);
+                bounds.extend(l);                
+                jekyllMapListen(m, s);
+            }
+            this.map.fitBounds(bounds);
+        },
+        indexMap: function () {
+            this.plotArray(settings.pages);
+        },
+        pageToMap: function () {
+            if (typeof(settings.latitude) !== 'undefined' && typeof(settings.longitude) !== 'undefined') {
+                this.options.center = new google.maps.LatLng(settings.latitude, settings.longitude);
+
+                var mainMarker = new google.maps.Marker({
+                    position: this.options.center,
+                    map: this.map,
+                    title: "The Immaculate Plage at Hemance"
+                });
+                this.map.setCenter(this.options.center);
+            }     
+
+            if (settings.locations instanceof Array) {
+                this.plotArray(settings.locations);
+            }
+
+            if (settings.kml) {
+                var mainLayer = new google.maps.KmlLayer(settings.kml);
+                mainLayer.setMap(this.map);
+            }
+            
+            if (settings.layers) {
+                var layers = [];
+                while (settings.layers.length > 0){
+                    var m = new google.maps.KmlLayer(settings.layers.pop());
+                    layers.push(m);
+                    m.setMap(this.map);
+                }
+            }
+        },
+        mappingInitialize: function () {
+            this.options = {
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: new google.maps.LatLng(0, 0)
+            };
+
+            this.map = new google.maps.Map(document.getElementById("jekyll-mapping"), this.options);
+
+            if (settings.pages) {
+                this.indexMap();
+            } else {
+                this.pageToMap();
+            }
+        },
+        loadScript: function (set) {
+            settings = set;
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "http://maps.googleapis.com/maps/api/js?key=" + settings.api_key + "&sensor=false&callback=jekyllMapping.mappingInitialize";
+            document.body.appendChild(script);
+        }
+    };
+    return obj;
+}());
+</script> 
+        
+    
 
 
 

@@ -108,6 +108,7 @@
 <div class="entry-content"><a href="http://3.bp.blogspot.com/_o22J03lZ9Gw/TKrDQxgtedI/AAAAAAAAzag/2MSJfICw9Xs/s1600/DSCN2675+%28Modified%29.JPG" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><br /><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="float: left; margin-right: 1em; text-align: left;"><tbody><tr><td style="text-align: center;"><img border="0" height="187" src="http://3.bp.blogspot.com/_o22J03lZ9Gw/TKrDQxgtedI/AAAAAAAAzag/2MSJfICw9Xs/s320/DSCN2675+%28Modified%29.JPG" style="margin-left: auto; margin-right: auto;" width="320" /></td></tr><tr><td class="tr-caption" style="text-align: center;">Pirate Ship Nyon</td></tr></tbody></table></a><br /><a href="http://4.bp.blogspot.com/_o22J03lZ9Gw/TKrDXVpKqoI/AAAAAAAAzak/gdTcw9Q4bEc/s1600/DSCN2693+%28Modified%29.JPG" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><br /><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="float: left; margin-right: 1em; text-align: left;"><tbody><tr><td style="text-align: center;"><img border="0" height="251" src="http://4.bp.blogspot.com/_o22J03lZ9Gw/TKrDXVpKqoI/AAAAAAAAzak/gdTcw9Q4bEc/s320/DSCN2693+%28Modified%29.JPG" style="margin-left: auto; margin-right: auto;" width="320" /></td></tr><tr><td class="tr-caption" style="text-align: center;">Truck at Nyon</td></tr></tbody></table></a><br /><a href="http://2.bp.blogspot.com/_o22J03lZ9Gw/TKrDfHzW8pI/AAAAAAAAzao/V9Q6MhrFIl8/s1600/DSCN2695+%28Modified%29.JPG" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><br /><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="float: left; margin-right: 1em; text-align: left;"><tbody><tr><td style="text-align: center;"><img border="0" height="188" src="http://2.bp.blogspot.com/_o22J03lZ9Gw/TKrDfHzW8pI/AAAAAAAAzao/V9Q6MhrFIl8/s320/DSCN2695+%28Modified%29.JPG" style="margin-left: auto; margin-right: auto;" width="320" /></td></tr><tr><td class="tr-caption" style="text-align: center;">Playground at Nyon</td></tr></tbody></table></a><br />Nyon has a fantastic park, there are great play areas to either side of the  <a href="http://www.museeduleman.ch/">Museum of the Lake</a>. On one side of the building there is a pirate ship on sand. There are buckets and cranes to hoist the sand up and down through funnels and the like providing endless hours of fun.<br /><br />On the other side of the museum there is truck to drive, some slides and a self propelling merry-go-round.<br /><br />There are picnic tables including some that are sheltered from the rain and sun. Given its great setting, this playground definitely has to be one of the best in the area.</div>
 
 
+
   <footer>
     <p class="meta">
       
@@ -248,6 +249,98 @@
   </script>
 
 
+
+
+    
+            <script type="text/javascript">
+var jekyllMapping = (function () {
+    'use strict';
+    var settings;
+    var obj = {
+        plotArray: function(locations) {
+            function jekyllMapListen (m, s) {
+                if (s.link) {
+                    google.maps.event.addListener(m, 'click', function() {
+                        window.location.href = s.link;
+                    });
+                }
+            }
+            var bounds = new google.maps.LatLngBounds(), markers = [], s, l, m;
+            while (locations.length > 0) {
+                s = locations.pop();
+                l = new google.maps.LatLng(s.latitude, s.longitude);
+                m = new google.maps.Marker({
+                    position: l,
+                    map: this.map,
+                    title: s.title
+                });
+                markers.push(m);
+                bounds.extend(l);                
+                jekyllMapListen(m, s);
+            }
+            this.map.fitBounds(bounds);
+        },
+        indexMap: function () {
+            this.plotArray(settings.pages);
+        },
+        pageToMap: function () {
+            if (typeof(settings.latitude) !== 'undefined' && typeof(settings.longitude) !== 'undefined') {
+                this.options.center = new google.maps.LatLng(settings.latitude, settings.longitude);
+
+                var mainMarker = new google.maps.Marker({
+                    position: this.options.center,
+                    map: this.map,
+                    title: "Ahoy on a Sea of Sand in Nyon"
+                });
+                this.map.setCenter(this.options.center);
+            }     
+
+            if (settings.locations instanceof Array) {
+                this.plotArray(settings.locations);
+            }
+
+            if (settings.kml) {
+                var mainLayer = new google.maps.KmlLayer(settings.kml);
+                mainLayer.setMap(this.map);
+            }
+            
+            if (settings.layers) {
+                var layers = [];
+                while (settings.layers.length > 0){
+                    var m = new google.maps.KmlLayer(settings.layers.pop());
+                    layers.push(m);
+                    m.setMap(this.map);
+                }
+            }
+        },
+        mappingInitialize: function () {
+            this.options = {
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: new google.maps.LatLng(0, 0)
+            };
+
+            this.map = new google.maps.Map(document.getElementById("jekyll-mapping"), this.options);
+
+            if (settings.pages) {
+                this.indexMap();
+            } else {
+                this.pageToMap();
+            }
+        },
+        loadScript: function (set) {
+            settings = set;
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "http://maps.googleapis.com/maps/api/js?key=" + settings.api_key + "&sensor=false&callback=jekyllMapping.mappingInitialize";
+            document.body.appendChild(script);
+        }
+    };
+    return obj;
+}());
+</script> 
+        
+    
 
 
 

@@ -108,6 +108,7 @@
 <div class="entry-content"><div class="separator" style="clear: both; text-align: center;"></div><table><tbody><tr><td><br /><a href="http://3.bp.blogspot.com/_o22J03lZ9Gw/TLHY1xx9u-I/AAAAAAAAzbg/EnpiDabts1c/s1600/DSCN2740.JPG" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="101" src="http://3.bp.blogspot.com/_o22J03lZ9Gw/TLHY1xx9u-I/AAAAAAAAzbg/EnpiDabts1c/s200/DSCN2740.JPG" width="200" /></a></td><td><br /><a href="http://2.bp.blogspot.com/_o22J03lZ9Gw/TLHY9cG2QRI/AAAAAAAAzbk/p_gtZwbGxdw/s1600/DSCN2743.JPG" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="200" src="http://2.bp.blogspot.com/_o22J03lZ9Gw/TLHY9cG2QRI/AAAAAAAAzbk/p_gtZwbGxdw/s200/DSCN2743.JPG" width="146" /></a></td></tr><tr><td><br /><a href="http://1.bp.blogspot.com/_o22J03lZ9Gw/TLHZKphW2lI/AAAAAAAAzbo/FIn0Pccibtw/s1600/DSCN2746.JPG" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="115" src="http://1.bp.blogspot.com/_o22J03lZ9Gw/TLHZKphW2lI/AAAAAAAAzbo/FIn0Pccibtw/s200/DSCN2746.JPG" width="200" /></a></td><td><br /><a href="http://2.bp.blogspot.com/_o22J03lZ9Gw/TLHZVHTScBI/AAAAAAAAzbs/U1bJj5dKpZs/s1600/DSCN2750.JPG" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="143" src="http://2.bp.blogspot.com/_o22J03lZ9Gw/TLHZVHTScBI/AAAAAAAAzbs/U1bJj5dKpZs/s200/DSCN2750.JPG" width="200" /></a></td></tr></tbody></table>It&#8217;s a little know fact that Meyrin has it&#8217;s own moon base. This is never a very busy playground in my experience since people probably get distracted by the nearby <a href="http://playdegex.blogspot.com/2010/09/jardin-alpin-in-meyrin.html">Jardin Alpin</a>. As well as four climbing structures there is a large concrete slope whose purpose is a mystery. A sign warns against cycling or skating down this slope.</div>
 
 
+
   <footer>
     <p class="meta">
       
@@ -248,6 +249,98 @@
   </script>
 
 
+
+
+    
+            <script type="text/javascript">
+var jekyllMapping = (function () {
+    'use strict';
+    var settings;
+    var obj = {
+        plotArray: function(locations) {
+            function jekyllMapListen (m, s) {
+                if (s.link) {
+                    google.maps.event.addListener(m, 'click', function() {
+                        window.location.href = s.link;
+                    });
+                }
+            }
+            var bounds = new google.maps.LatLngBounds(), markers = [], s, l, m;
+            while (locations.length > 0) {
+                s = locations.pop();
+                l = new google.maps.LatLng(s.latitude, s.longitude);
+                m = new google.maps.Marker({
+                    position: l,
+                    map: this.map,
+                    title: s.title
+                });
+                markers.push(m);
+                bounds.extend(l);                
+                jekyllMapListen(m, s);
+            }
+            this.map.fitBounds(bounds);
+        },
+        indexMap: function () {
+            this.plotArray(settings.pages);
+        },
+        pageToMap: function () {
+            if (typeof(settings.latitude) !== 'undefined' && typeof(settings.longitude) !== 'undefined') {
+                this.options.center = new google.maps.LatLng(settings.latitude, settings.longitude);
+
+                var mainMarker = new google.maps.Marker({
+                    position: this.options.center,
+                    map: this.map,
+                    title: "Meyrin's Moon Base"
+                });
+                this.map.setCenter(this.options.center);
+            }     
+
+            if (settings.locations instanceof Array) {
+                this.plotArray(settings.locations);
+            }
+
+            if (settings.kml) {
+                var mainLayer = new google.maps.KmlLayer(settings.kml);
+                mainLayer.setMap(this.map);
+            }
+            
+            if (settings.layers) {
+                var layers = [];
+                while (settings.layers.length > 0){
+                    var m = new google.maps.KmlLayer(settings.layers.pop());
+                    layers.push(m);
+                    m.setMap(this.map);
+                }
+            }
+        },
+        mappingInitialize: function () {
+            this.options = {
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: new google.maps.LatLng(0, 0)
+            };
+
+            this.map = new google.maps.Map(document.getElementById("jekyll-mapping"), this.options);
+
+            if (settings.pages) {
+                this.indexMap();
+            } else {
+                this.pageToMap();
+            }
+        },
+        loadScript: function (set) {
+            settings = set;
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "http://maps.googleapis.com/maps/api/js?key=" + settings.api_key + "&sensor=false&callback=jekyllMapping.mappingInitialize";
+            document.body.appendChild(script);
+        }
+    };
+    return obj;
+}());
+</script> 
+        
+    
 
 
 

@@ -108,6 +108,7 @@
 <div class="entry-content"><div class="separator" style="clear: both; text-align: center;"><a href="http://2.bp.blogspot.com/_o22J03lZ9Gw/TL4Dk1XTdAI/AAAAAAAAzcI/-ivdcqob69o/s1600/DSCN2772+%28Modified%29.JPG" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" height="212" src="http://2.bp.blogspot.com/_o22J03lZ9Gw/TL4Dk1XTdAI/AAAAAAAAzcI/-ivdcqob69o/s320/DSCN2772+%28Modified%29.JPG" width="320" /></a></div>Geneva&#8217;s <a href="http://www.ville-ge.ch/cjb/index_en.php">Jardin Botanique</a> is quite simply amazing and we seem to never go into town without visiting. It has&nbsp; bespoke wooden climbing frames with rope bridges, an excellent hoist to lift the sand and a lovely lizard and bugs to balance on.<br /><br />There&#8217;s a unique carousel, a cafe for a beer by the playground, peacocks roaming and an animal park on the other side of the green. If you have never been here&#8230; go!<br />Beyond the playground there are touch and feel plant areas, a hot house, &#8230;<br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/_o22J03lZ9Gw/TL4D2u9ixyI/AAAAAAAAzcM/rpUI6MBcyM8/s1600/DSCN2773.JPG" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" height="240" src="http://4.bp.blogspot.com/_o22J03lZ9Gw/TL4D2u9ixyI/AAAAAAAAzcM/rpUI6MBcyM8/s320/DSCN2773.JPG" width="320" /></a></div>A childrens&#8217; amphitheatre provides story telling opportunities though I don&#8217;t know if anyone organises them?<br /><br />Switzerland while famous for being expensive offers a lot of stuff, like this, for free.<br /><div class="separator" style="clear: both; text-align: center;"><a href="http://2.bp.blogspot.com/_o22J03lZ9Gw/TL4D892IKbI/AAAAAAAAzcQ/mQ9lJqS7L6E/s1600/DSCN2775+%28Modified%29.JPG" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="320" src="http://2.bp.blogspot.com/_o22J03lZ9Gw/TL4D892IKbI/AAAAAAAAzcQ/mQ9lJqS7L6E/s320/DSCN2775+%28Modified%29.JPG" width="234" /></a></div><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/_o22J03lZ9Gw/TL4EDjFyzHI/AAAAAAAAzcU/v9vhqId1R8s/s1600/DSCN2776+%28Modified%29.JPG" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="304" src="http://1.bp.blogspot.com/_o22J03lZ9Gw/TL4EDjFyzHI/AAAAAAAAzcU/v9vhqId1R8s/s320/DSCN2776+%28Modified%29.JPG" width="320" /></a></div><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://3.bp.blogspot.com/_o22J03lZ9Gw/TL4EJTOx0NI/AAAAAAAAzcY/yhuahyqjRlc/s1600/DSCN2779+%28Modified%29.JPG" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="320" src="http://3.bp.blogspot.com/_o22J03lZ9Gw/TL4EJTOx0NI/AAAAAAAAzcY/yhuahyqjRlc/s320/DSCN2779+%28Modified%29.JPG" width="202" /></a></div><div class="separator" style="clear: both; text-align: center;"><a href="http://3.bp.blogspot.com/_o22J03lZ9Gw/TL4GirkqxMI/AAAAAAAAzcg/IkuXaqlMIK4/s1600/DSCN2785+%28Modified%29.JPG" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="253" src="http://3.bp.blogspot.com/_o22J03lZ9Gw/TL4GirkqxMI/AAAAAAAAzcg/IkuXaqlMIK4/s320/DSCN2785+%28Modified%29.JPG" width="320" /></a></div></div>
 
 
+
   <footer>
     <p class="meta">
       
@@ -248,6 +249,98 @@
   </script>
 
 
+
+
+    
+            <script type="text/javascript">
+var jekyllMapping = (function () {
+    'use strict';
+    var settings;
+    var obj = {
+        plotArray: function(locations) {
+            function jekyllMapListen (m, s) {
+                if (s.link) {
+                    google.maps.event.addListener(m, 'click', function() {
+                        window.location.href = s.link;
+                    });
+                }
+            }
+            var bounds = new google.maps.LatLngBounds(), markers = [], s, l, m;
+            while (locations.length > 0) {
+                s = locations.pop();
+                l = new google.maps.LatLng(s.latitude, s.longitude);
+                m = new google.maps.Marker({
+                    position: l,
+                    map: this.map,
+                    title: s.title
+                });
+                markers.push(m);
+                bounds.extend(l);                
+                jekyllMapListen(m, s);
+            }
+            this.map.fitBounds(bounds);
+        },
+        indexMap: function () {
+            this.plotArray(settings.pages);
+        },
+        pageToMap: function () {
+            if (typeof(settings.latitude) !== 'undefined' && typeof(settings.longitude) !== 'undefined') {
+                this.options.center = new google.maps.LatLng(settings.latitude, settings.longitude);
+
+                var mainMarker = new google.maps.Marker({
+                    position: this.options.center,
+                    map: this.map,
+                    title: "The Lizard of the Jardin Botanique"
+                });
+                this.map.setCenter(this.options.center);
+            }     
+
+            if (settings.locations instanceof Array) {
+                this.plotArray(settings.locations);
+            }
+
+            if (settings.kml) {
+                var mainLayer = new google.maps.KmlLayer(settings.kml);
+                mainLayer.setMap(this.map);
+            }
+            
+            if (settings.layers) {
+                var layers = [];
+                while (settings.layers.length > 0){
+                    var m = new google.maps.KmlLayer(settings.layers.pop());
+                    layers.push(m);
+                    m.setMap(this.map);
+                }
+            }
+        },
+        mappingInitialize: function () {
+            this.options = {
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: new google.maps.LatLng(0, 0)
+            };
+
+            this.map = new google.maps.Map(document.getElementById("jekyll-mapping"), this.options);
+
+            if (settings.pages) {
+                this.indexMap();
+            } else {
+                this.pageToMap();
+            }
+        },
+        loadScript: function (set) {
+            settings = set;
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "http://maps.googleapis.com/maps/api/js?key=" + settings.api_key + "&sensor=false&callback=jekyllMapping.mappingInitialize";
+            document.body.appendChild(script);
+        }
+    };
+    return obj;
+}());
+</script> 
+        
+    
 
 
 
