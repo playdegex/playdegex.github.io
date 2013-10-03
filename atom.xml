@@ -4,7 +4,7 @@
   <title><![CDATA[Play de Gex]]></title>
   <link href="http://playdegex.github.io/atom.xml" rel="self"/>
   <link href="http://playdegex.github.io/"/>
-  <updated>2013-10-03T22:50:26+02:00</updated>
+  <updated>2013-10-03T22:53:03+02:00</updated>
   <id>http://playdegex.github.io/</id>
   <author>
     <name><![CDATA[Steve Traylen]]></name>
@@ -18,10 +18,7 @@
     <link href="http://playdegex.github.io/2013/09/eaux-vives-park-and-paddling-pool/"/>
     <updated>2013-09-08T15:53:14+02:00</updated>
     <id>http://playdegex.github.io/2013/09/eaux-vives-park-and-paddling-pool</id>
-    <content type="html"><![CDATA[<p><img class="left" src="http://playdegex.github.io/photos/20130802_144450.jpg">
-<img class="left" src="http://playdegex.github.io/photos/20130802_150821.jpg"></p>
-
-<p>The <a href="http://www.ville-geneve.ch/plan-ville/parcs-jardins-plages-bains-publics/parc-eaux-vives/">Eaux-Vives</a> park borders Lake Geneva close to the Jet d&#8217;Eau.
+    <content type="html"><![CDATA[<p>The <a href="http://www.ville-geneve.ch/plan-ville/parcs-jardins-plages-bains-publics/parc-eaux-vives/">Eaux-Vives</a> park borders Lake Geneva close to the Jet d&#8217;Eau.
 The park itself is beautifully kept with very impressive flower beds. On
 a hot day the park has a well shaded paddling pool which is not photographed here.</p>
 
@@ -29,6 +26,9 @@ a hot day the park has a well shaded paddling pool which is not photographed her
 park has ice-creams and a reasonable menu-du-jour. As well as the main
 wooden climbing frame there are some easy swings for toddlers.
 The day we were there free deck chairs were are also available.</p>
+
+<p><img class="left" src="http://playdegex.github.io/photos/20130802_144450.jpg">
+<img class="right" src="http://playdegex.github.io/photos/20130802_150821.jpg"></p>
 ]]></content>
   </entry>
   
