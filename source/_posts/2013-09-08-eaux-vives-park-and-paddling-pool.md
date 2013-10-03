@@ -11,8 +11,6 @@ mapping:
 ---
 
 
-{% img left /photos/20130802_144450.jpg %}
-{% img left /photos/20130802_150821.jpg %}
 
 The [Eaux-Vives][eaux] park borders Lake Geneva close to the Jet d'Eau. 
 The park itself is beautifully kept with very impressive flower beds. On 
@@ -22,6 +20,9 @@ To find the playground walk uphill to the top of the park. The cafe in the
 park has ice-creams and a reasonable menu-du-jour. As well as the main 
 wooden climbing frame there are some easy swings for toddlers. 
 The day we were there free deck chairs were are also available.
+
+{% img left /photos/20130802_144450.jpg %}
+{% img right /photos/20130802_150821.jpg %}
 
 [eaux]: http://www.ville-geneve.ch/plan-ville/parcs-jardins-plages-bains-publics/parc-eaux-vives/
 
