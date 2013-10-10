@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Public | Play de Gex]]></title>
   <link href="http://playdegex.github.io/blog/categories/public/atom.xml" rel="self"/>
   <link href="http://playdegex.github.io/"/>
-  <updated>2013-10-10T20:50:48+02:00</updated>
+  <updated>2013-10-10T20:51:22+02:00</updated>
   <id>http://playdegex.github.io/</id>
   <author>
     <name><![CDATA[Steve Traylen]]></name>
@@ -27,8 +27,8 @@ park has ice-creams and a reasonable menu-du-jour. As well as the main
 wooden climbing frame there are some easy swings for toddlers.
 The day we were there free deck chairs were are also available.</p>
 
-<p>{% img /photos/20130802_144450.jpg %}
-{% img /photos/20130802_150821.jpg %}</p>
+<p><img src="/photos/20130802_144450.jpg">
+<img src="/photos/20130802_150821.jpg"></p>
 ]]></content>
   </entry>
   
@@ -49,8 +49,8 @@ lane 100m athletics circle for scooter races.</p>
 pizza van on the opposite side of the road. The playground is located
 behind Sergy&rsquo;s school.</p>
 
-<p>{% img /photos/20130710_171830.jpg %}
-{% img /photos/20130710_171912.jpg %}</p>
+<p><img src="/photos/20130710_171830.jpg">
+<img src="/photos/20130710_171912.jpg"></p>
 ]]></content>
   </entry>
   
