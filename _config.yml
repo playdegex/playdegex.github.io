@@ -12,11 +12,11 @@ description:
 #####################
 mapping:
     provider: google_js
+    zoom: 5
     api_key: AIzaSyAdd6WGIih1y7ph8yXHU4RkacGRVSppkNY
-    zoom: 100
     dimensions:
-        width: 500
-        height: 300
+        width: 300
+        height: 200
 
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
