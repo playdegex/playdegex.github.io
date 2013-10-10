@@ -21,8 +21,8 @@ park has ice-creams and a reasonable menu-du-jour. As well as the main
 wooden climbing frame there are some easy swings for toddlers. 
 The day we were there free deck chairs were are also available.
 
-{% img left /photos/20130802_144450.jpg %}
-{% img right /photos/20130802_150821.jpg %}
+{% img /photos/20130802_144450.jpg %}
+{% img /photos/20130802_150821.jpg %}
 
 [eaux]: http://www.ville-geneve.ch/plan-ville/parcs-jardins-plages-bains-publics/parc-eaux-vives/
 

@@ -23,8 +23,8 @@ Top tip is to go on Thursday when there is also a take away
 pizza van on the opposite side of the road. The playground is located 
 behind Sergy's school.
 
-{% img right /photos/20130710_171830.jpg %}
-{% img left /photos/20130710_171912.jpg %}
+{% img /photos/20130710_171830.jpg %}
+{% img /photos/20130710_171912.jpg %}
 
 
 
